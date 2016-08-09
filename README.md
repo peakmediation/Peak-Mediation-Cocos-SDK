@@ -16,33 +16,16 @@ Information about the android project architecture is located in the "**project\
 2. Copy the **peakSdkModule** folder to the **proj.android-studio\app\jni** folder.
 3. Open the Android.mk file of your project. 
 4. To attach the native module you have to do the next:  
-   Add
-   ```
-   $(call import-add-path, $(LOCAL_PATH))
-   ``` line after all  
-   ```
-   $(call import-add-path )
-   ``` declarations to make header from the peak sdk visible.  
-   Add 
-   ```
-   LOCAL_WHOLE_STATIC_LIBRARIES := peakSdkModule
-   ``` line somewhere in the middle.  
-   Add 
-   ```
-   $(call import-module, ./peakSdkModule)
-   ``` in the end of the file after  
-   ```
-   $(call import-module,.)
-   ``` line.
+   Add `$(call import-add-path, $(LOCAL_PATH))` line after all `$(call import-add-path )` declarations to make header from the peak sdk visible.  
+   Add `LOCAL_WHOLE_STATIC_LIBRARIES := peakSdkModule` line somewhere in the middle.  
+   Add `$(call import-module, ./peakSdkModule)` in the end of the file after `$(call import-module,.)` line.
 5. Open Application.mk.
    You have to implement ABI compatibility at least for 2 platforms: armeabi and armeabi-v7a.  
-   Add 
-   ```
-   LOCAL_LDLIBS := -landroid -llog
-   ``` line in the Application.mk file.
-  
+   Add `LOCAL_LDLIBS := -landroid -llog` line in the Application.mk file.
+
 Example of the Android.mk file:
-~~~~
+
+```xml
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
@@ -80,7 +63,7 @@ $(call import-module, ./peakSdkModule)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
-~~~~
+```
 
 **Setup android studio project.**
 
@@ -88,8 +71,7 @@ $(call import-module, ./peakSdkModule)
 2. On the next step you have to establish module dependencies.
 In the Android studio, right click on your project, select “Open Module settings”, select your cocos2dx project, go to the “Dependencies” tab, Add the PeakNdkWrapper module and the peak-sdk-<version>.
 3. Include Google Play Services to your application's build.gradle for better compatibility:
-```
-#!java
+```java
 
  dependencies {  
         ...  
@@ -107,8 +89,7 @@ Implementation of the Peak SDK for cocos2dx requires a few changes in the main .
 2. You have to initialize the PeakNdkWrapper. To do this just add the next code to the AppActivity.java file  
 
 
-```
-#!java
+```java
 
 public class AppActivity extends Cocos2dxActivity {
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,10 +113,7 @@ public class AppActivity extends Cocos2dxActivity {
 }
 ```
 
-After all changes in the your cocos2dx project for android you have to rebuild native modules. You can do this by using the next command
-```
-cocos compile -p android –-android-studio
-``` in the **proj.android-studio** folder.
+After all changes in the your cocos2dx project for android you have to rebuild native modules. You can do this by using the next command `cocos compile -p android –-android-studio` in the **proj.android-studio** folder.
 
 # Integration instruction for iOS. #
 
