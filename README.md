@@ -117,7 +117,7 @@ After all changes in the your cocos2dx project for android you have to rebuild n
 
 # Integration instruction for iOS. #
 
-To implement the peak SDK for iOS you have to deploy original PeakSDK iOS framework to the "**proj.ios_mac**" folder of your cocos2dx project. Read this documentation [iOS PeakSDK](https://github.com/peakmediation/Peak-Mediation-Android-SDK) for deployment up to the "Using PeakSDK" topic.  
+To implement the peak SDK for iOS you have to deploy original PeakSDK iOS framework to the "**proj.ios_mac**" folder of your cocos2dx project. Read this documentation [iOS PeakSDK](https://github.com/peakmediation/Peak-Mediation-iOS-SDK) for deployment up to the "Using PeakSDK" topic.  
 When you deploy PeakSDK iOS framework, you have to open the "**Lib/IOS**" folder, add the **libPeakSdkWrapper.a** library and the **PeakSdkModule** folder with headers to your project.
 
 1. Copy the PeakSdkModule folder form the "**Lib/IOS**" to the "**proj.ios_mac/ios folder**".
