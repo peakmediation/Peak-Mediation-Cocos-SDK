@@ -12,12 +12,14 @@ namespace PeakSdk
         CPeakNativeAd();
         CPeakNativeAd( const std::string& actionText,
                       const std::string& icon,
+                      const std::string& privacyIcon,
                       const std::string& mainImage,
                       const std::string& text,
                       const std::string& title );
         
         std::string getActionText() const;
         std::string getIcon() const;
+        std::string getPrivacyIcon() const;
         std::string getMainImage() const;
         std::string getText() const;
         std::string getTitle() const;
@@ -25,6 +27,7 @@ namespace PeakSdk
     private:
         std::string m_actionText;
         std::string m_icon;
+        std::string m_privacyIcon;
         std::string m_mainImage;
         std::string m_text;
         std::string m_title;
@@ -90,6 +93,13 @@ namespace PeakSdk
          */
         static void HandleNativeAdClicked( const char* nativeAdId );
         
+        
+        /** @function HandlePrivacyIconClick
+         @param[in] nativeAdId - advertising zone.
+         */
+        static void HandleNativePrivacyIconClicked( const char* nativeAdId );
+        
+        
         //////////////////////////////////////// API Callbacks ////////////////////////////////////////
         
         /** @function SetInitializationSuccessListener
@@ -142,11 +152,17 @@ namespace PeakSdk
          */
         static void SetCompletedRewardExperienceListener( const std::function<void(const std::string&)>& callback );
         
-        /** @function SetShowNativeAdFailedListener
+        /**@function SetNativeAdShowSuccessListener
+         Set listener for the didShowNative event.
+         @param[in] callback - the callback is called when the event is occurred.
+         */
+        static void SetNativeAdShowSuccessListener( const std::function<void(const std::string&)>& callback );
+        
+        /** @function SetNativeAdShowFailedListener
          Set listener for the didFailToShowNativeWithError event.
          @param[in] callback - the callback is called when the event is occurred.
          */
-        static void SetShowNativeAdFailedListener( const std::function<void(const std::string&, const std::string&)>& callback );
+        static void SetNativeAdShowFailedListener( const std::function<void(const std::string&, const std::string&)>& callback );
     };
 }
 #endif //PROJ_PEAK_SDK_API_H

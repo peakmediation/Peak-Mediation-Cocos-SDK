@@ -12,12 +12,14 @@ namespace PeakSdk
       CPeakNativeAd();
       CPeakNativeAd( const std::string& actionText,
                      const std::string& icon,
+                     const std::string& privacyIcon,
                      const std::string& mainImage,
                      const std::string& text,
                      const std::string& title );
 
       std::string getActionText() const;
       std::string getIcon() const;
+      std::string getPrivacyIcon() const;
       std::string getMainImage() const;
       std::string getText() const;
       std::string getTitle() const;
@@ -25,6 +27,7 @@ namespace PeakSdk
    private:
       std::string m_actionText;
       std::string m_icon;
+      std::string m_privacyIcon;
       std::string m_mainImage;
       std::string m_text;
       std::string m_title;
@@ -89,6 +92,13 @@ namespace PeakSdk
       @param[in] nativeAdId - advertising zone.
       */
       static void HandleNativeAdClicked( const char* nativeAdId );
+
+      /** @function HandleNativeAdPrivacyIconClicked
+       Use the next method to handle click on the "Call to call to privacy icon" button.
+       Call of this method will redirect the user to the website for that ad:
+       @param[in] nativeAdId - advertising zone.
+       */
+       static void HandleNativeAdPrivacyIconClicked( const char* nativeAdId );
 
       //////////////////////////////////////// API Callbacks ////////////////////////////////////////
 
@@ -156,11 +166,17 @@ namespace PeakSdk
       */
       static void SetCompletedRewardExperienceListener( const std::function<void(const std::string&)>& callback );
 
-      /** @function SetShowNativeAdFailedListener
+      /** @function SetNativeAdShowSuccessListener
       This function doesn't have implementation. This function exists only for IOS compatibility.
       @param[in] callback - the callback is called when the event is occurred.
       */
-      static void SetShowNativeAdFailedListener( const std::function<void(const std::string&,const std::string&)>& callback );
+      static void SetNativeAdShowSuccessListener( const std::function<void(const std::string&)>& callback );
+
+      /** @function SetNativeAdShowFailedListener
+      This function doesn't have implementation. This function exists only for IOS compatibility.
+      @param[in] callback - the callback is called when the event is occurred.
+      */
+      static void SetNativeAdShowFailedListener( const std::function<void(const std::string&,const std::string&)>& callback );
    };
 }
 #endif //PROJ_PEAK_SDK_API_H
