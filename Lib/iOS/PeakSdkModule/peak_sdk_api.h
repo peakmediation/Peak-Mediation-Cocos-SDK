@@ -2,6 +2,7 @@
 #define PROJ_PEAK_SDK_API_H
 
 #include <functional>
+#include <memory>
 #include <string>
 
 namespace PeakSdk
@@ -33,6 +34,21 @@ namespace PeakSdk
         std::string m_title;
     };
     
+    enum  ETargetGender
+    {
+       ETargetGenderUnspecified,
+       ETargetGenderMale,
+       ETargetGenderFemale
+    };
+    
+    class CPeakAsyncAdRequestInterface
+    {
+    public:
+        virtual void start( const std::function<void(std::string)>&callback ) = 0;
+        virtual void cancel() = 0;
+        virtual ~CPeakAsyncAdRequestInterface(){}
+    };
+    
     class CPeakSdkApi
     {
     public:
@@ -48,6 +64,8 @@ namespace PeakSdk
          @param[in] adZoneId - advertising zone. The parameter could be for banner or interstitial advertising.
          */
         static bool CheckAdAvailable( const char* adZoneId );
+        
+        static std::unique_ptr<CPeakAsyncAdRequestInterface> createAsyncRequest( const char* peakAppId );
         
         /** @function ShowInterstitial
          Show fullscreen advertising.
@@ -69,6 +87,8 @@ namespace PeakSdk
          Remove existed banner from the screen.
          */
         static void RemoveBanner();
+        static void setTargetingAge(int age );
+        static void setTargetingGender( ETargetGender gender );
         
         //////////////////////////////////////// API Native SDK Functions  ////////////////////////////////////////
         
@@ -94,10 +114,10 @@ namespace PeakSdk
         static void HandleNativeAdClicked( const char* nativeAdId );
         
         
-        /** @function HandlePrivacyIconClick
+        /** @function HandleNativeAdPrivacyIconClicked
          @param[in] nativeAdId - advertising zone.
          */
-        static void HandleNativePrivacyIconClicked( const char* nativeAdId );
+        static void HandleNativeAdPrivacyIconClicked( const char* nativeAdId );
         
         
         //////////////////////////////////////// API Callbacks ////////////////////////////////////////

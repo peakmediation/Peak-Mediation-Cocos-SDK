@@ -177,3 +177,27 @@ When you deploy PeakSDK iOS framework, you have to open the "**Lib/IOS**" folder
        ... Your code ...
     } );
  ```
+ 10. Make async call that checks ad availability and executes completionBlock if ad is available and async call is not canceled. All UI changes should be handled in completionBlock, do not change UI in other place, if you use this call.
+
+ std::unique_ptr< PeakSdk::CPeakAsyncAdRequestInterface > asyncReq = PeakSdk::CPeakSdkApi::createAsyncRequest( AD_ZONE_ID );
+ asyncReq->start( [this]( std::string id )
+   {
+      /*do something here*/
+   });
+If you want to cancel async call use following method:
+   asyncReq->cancel();
+
+Don’t forget to cancel async request if you don’t need one anymore. It prevent unexpected ads presentations and other unhandled behaviour.
+
+10. Get more personalized ads with higher revenue. Just provide consumer's targeting info:
+```
+   PeakSdk::ETargetGender g = PeakSdk::ETargetGender::ETargetGenderUnspecified;
+   /*
+   g = PeakSdk::ETargetGender::ETargetGenderMale;
+   g = PeakSdk::ETargetGender::ETargetGenderFemale;   
+   */
+   PeakSdk::CPeakSdkApi::setTargetingGender( g );
+   
+   PeakSdk::CPeakSdkApi::setTargetingAge( age );
+```
+   You must set this info before calling `PeakSdk::CPeakSdkApi::Initialize( PEAK_APP_ID )` method.
